@@ -1,5 +1,16 @@
 # tensorflow-e2e
 
+# Initialize workspace and setup environment
+```
+make init
+```
+
+# Run Server
+```
+make run
+```
+
+
 ## Goals
 - [ ] Upload Images
 - [ ] Data split
