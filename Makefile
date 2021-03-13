@@ -7,7 +7,7 @@ init:
 
 run:
 	( \
-		pipenv run streamlit run image_uploader/file_uploader.py \
+		pipenv run streamlit run file_uploader.py \
 	)
 
 two:
