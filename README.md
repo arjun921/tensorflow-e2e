@@ -16,13 +16,14 @@ More like thinking out loud
 - [ ] Upload Data
   - [x] +/- class count 
     - [x] File upload input
-    - [ ] class name input
+    - [x] class name input
   - [x] model name input
   - [ ] create folder by model name in workspace
     - [ ] validate folder exists/show relevant error if exists
-    - [ ] upload files to relevant class folder name
+    - [x] upload files to relevant class folder name
 - [ ] Data split
 - [ ] Model Fit
+  - [ ] STDOUT to Streamlit? 🤔 (THAT WOULD BE LIT!)
 - [ ] Test metrics/charts
 - [ ] Export deploy
 - [ ] Docker push (static/dynamic port) (optional)

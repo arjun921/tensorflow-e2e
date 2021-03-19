@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 streamlit = "*"
+semver = "*"
 
 [dev-packages]
 black = "*"

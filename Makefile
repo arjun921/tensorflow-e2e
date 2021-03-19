@@ -1,5 +1,3 @@
-# all: start-server two three
-
 init:
 	pip install pipenv
 	pipenv install
