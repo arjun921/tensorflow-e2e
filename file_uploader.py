@@ -72,7 +72,7 @@ if (
         try:
             classes = data.keys()
             for class_ in classes:
-                class_path = model_dir / Path(class_)
+                class_path = model_dir / Path(class_) / Path ('data')
                 os.makedirs(class_path)
                 for file in data[class_]:
                     if file is not None:
@@ -85,6 +85,7 @@ if (
             st.error(e)
         # TODO: Save image files to class subfolders
         st.success(f"Data saved successfully for {model_name} v{model_version} 🎊")
+        st.write(f'To add more data to this model, add data to relevant classes inside {model_dir}')
         st.text("To start training, run")
-        st.code("make train")
-        print(data)
+        st.code("make train {}")
+        # print(data)
