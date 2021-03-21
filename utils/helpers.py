@@ -1,13 +1,13 @@
 import os
 from pathlib import Path
 
-import numpy as np
+from sklearn.model_selection import train_test_split as sksplit
+
 import pandas as pd
 import streamlit as st
 from configs import config
 from semver import VersionInfo
 
-np.random.seed(43)
 
 
 def underscore_seperated_path(path: str):
@@ -60,16 +60,15 @@ def data_uploader(data: dict, model_dir: Path):
     return df, csv_path.parent
 
 def train_test_split(df: pd.DataFrame, csv_path: Path,  train_percentage: float = 0.8):
-    condition = np.random.rand(len(df)) < train_percentage
-    train_df = df[condition]
-    test_df = df[~condition]
+    train_df, test_df = sksplit(df, train_size=train_percentage)
+
     
     # Create dir (Sanity Check)
     create_dir(csv_path)
     
     # Save Train
-    train_df.to_csv(csv_path / Path('train.csv'))
+    train_df.to_csv(csv_path / Path('train.csv'),index=False)
 
     # Save Test
-    test_df.to_csv(csv_path / Path('test.csv'))
+    test_df.to_csv(csv_path / Path('test.csv'),index=False)
     return train_df, test_df

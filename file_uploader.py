@@ -9,6 +9,10 @@ from configs.config import config
 from utils.helpers import (create_dir, data_uploader, get_model_dir,
                            train_test_split, underscore_seperated_path)
 
+import numpy as np
+
+np.random.seed(43)
+
 model_version = semver.VersionInfo.parse("1.0.0")
 
 st.header("Data Uploader")

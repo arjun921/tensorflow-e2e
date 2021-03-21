@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 streamlit = "==0.79.0"
 semver = "*"
+sklearn = "*"
 
 [dev-packages]
 black = "*"
