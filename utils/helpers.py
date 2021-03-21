@@ -1,21 +1,27 @@
-
-from pathlib import Path
-from semver import VersionInfo
 import os
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 import streamlit as st
+from configs import config
+from semver import VersionInfo
+
+np.random.seed(43)
 
 
 def underscore_seperated_path(path: str):
-    path = path.replace(' ','_')
-    path = path.replace('-','_')
+    path = path.replace(" ", "_")
+    path = path.replace("-", "_")
     return Path(path)
 
-def get_model_dir(path: Path, version: VersionInfo ):
+
+def get_model_dir(path: Path, version: VersionInfo):
     versioned_path = path / Path(str(version))
     while os.path.exists(versioned_path):
         version = version.bump_major()
         versioned_path = path / Path(str(version))
-    return versioned_path,version
+    return versioned_path, version
 
 
 def create_dir(path: Path):
@@ -25,12 +31,13 @@ def create_dir(path: Path):
     except Exception as e:
         st.error(e)
 
-    
+
 def data_uploader(data: dict, model_dir: Path):
+    df = pd.DataFrame(columns=["path", "class"])
     try:
         classes = data.keys()
         for class_ in classes:
-            class_path = model_dir / Path ('data') / Path(class_)
+            class_path = model_dir / Path("data") / Path(class_)
             create_dir(class_path)
             for file in data[class_]:
                 if file is not None:
@@ -39,5 +46,30 @@ def data_uploader(data: dict, model_dir: Path):
                     fopen = open(file_path, "wb")
                     fopen.write(bytes_data)
                     fopen.close()
+                    df = df.append(
+                        {"path": file_path.absolute(), "class": class_},
+                        ignore_index=True,
+                    )
     except Exception as e:
         st.error(e)
+
+    # write DF as CSV
+    csv_path = model_dir / Path("csv") / Path("source.csv")
+    create_dir(csv_path.parent)
+    df.to_csv(csv_path, index=False)
+    return df, csv_path.parent
+
+def train_test_split(df: pd.DataFrame, csv_path: Path,  train_percentage: float = 0.8):
+    condition = np.random.rand(len(df)) < train_percentage
+    train_df = df[condition]
+    test_df = df[~condition]
+    
+    # Create dir (Sanity Check)
+    create_dir(csv_path)
+    
+    # Save Train
+    train_df.to_csv(csv_path / Path('train.csv'))
+
+    # Save Test
+    test_df.to_csv(csv_path / Path('test.csv'))
+    return train_df, test_df

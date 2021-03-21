@@ -58,7 +58,10 @@ More like thinking out loud
     - [x] create folder by model name in workspace
       - [x] validate folder exists/show relevant error if exists
       - [x] upload files to relevant class folder name
-  - [ ] Data split
+  - [x] Data split
+    - [x] Percent split (Train, Test)
+      -[x] Store CSV as path and split on df
+    - [ ] Undersampling/Oversampling : Next release, run happy flow for first version
 - [ ] Model Fit
   - [ ] STDOUT to Streamlit? 🤔 (THAT WOULD BE LIT!)
 - [ ] Test metrics/charts
