@@ -69,6 +69,7 @@ if (
         data_uploader(data, model_dir)
 
         st.success(f"Data saved successfully for {model_name} v{model_version} 🎊")
-        st.write(f'To add more data, push new images to ',model_dir.absolute())
+        st.write('To append data, push new images to:')
+        st.write(model_dir.absolute())
         st.text("To start training, run")
-        st.code(f"make train {model_dir}")
+        st.code(f"make train workspace={model_dir}")

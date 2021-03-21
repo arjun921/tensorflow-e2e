@@ -30,7 +30,7 @@ def data_uploader(data: dict, model_dir: Path):
     try:
         classes = data.keys()
         for class_ in classes:
-            class_path = model_dir / Path(class_) / Path ('data')
+            class_path = model_dir / Path ('data') / Path(class_)
             create_dir(class_path)
             for file in data[class_]:
                 if file is not None:

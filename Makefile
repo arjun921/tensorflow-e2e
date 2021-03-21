@@ -3,16 +3,18 @@ init:
 	pipenv install
 	mkdir workspace
 
-run:
+upload:
 	( \
 		pipenv run streamlit run file_uploader.py \
 	)
 
-two:
-	touch two
+train:
+	( \
+		# export workspace=$(workspace) \
+		echo "pipenv run streamlit run train.py $(workspace)" \
+		# pipenv run streamlit run train.py \
+	)
 
-three:
-	touch three
 
 clean:
 	rm -f start-server two three
