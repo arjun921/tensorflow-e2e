@@ -35,7 +35,6 @@ if (
 
     # Retrieve app state
     app_state = st.experimental_get_query_params()
-    # print(app_state)
 
     # Display saved result if it exist
     if "class_count" in app_state:
@@ -73,4 +72,3 @@ if (
         st.write(f'To add more data, push new images to ',model_dir.absolute())
         st.text("To start training, run")
         st.code(f"make train {model_dir}")
-        # print(data)
