@@ -24,8 +24,9 @@ Data gets uploaded to their class folders under the folder structure shown below
 - workspace
   - model_name
     - version
-      - class_1
-      - class_2
+      - data
+        - class_1
+        - class_2
 ```
 
 Model names are `_` (underscore) seperated for sanity of traversion across operating systems
