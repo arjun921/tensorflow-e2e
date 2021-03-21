@@ -6,7 +6,7 @@ import semver
 import streamlit as st
 
 from configs.config import config
-from utils.helpers import get_model_dir, underscore_seperated_path
+from utils.helpers import get_model_dir, underscore_seperated_path, create_dir, data_uploader
 
 model_version = semver.VersionInfo.parse("1.0.0")
 
@@ -56,6 +56,7 @@ if (
         local_model_path = underscore_seperated_path(str(model_name))
         model_path = config.WORKSPACE / local_model_path
         model_dir, model_version = get_model_dir(path=model_path, version=model_version)
+        
         st.experimental_set_query_params(
             class_count=class_count,
             model_name=local_model_path,
@@ -63,29 +64,13 @@ if (
         )
 
         # Create model folder in workspace
-        try:
-            os.makedirs(model_dir, exist_ok=True)
-        except Exception as e:
-            st.error(e)
+        create_dir(model_dir)
 
-        # TODO: Loop and create class subfolders
-        try:
-            classes = data.keys()
-            for class_ in classes:
-                class_path = model_dir / Path(class_) / Path ('data')
-                os.makedirs(class_path)
-                for file in data[class_]:
-                    if file is not None:
-                        file_path = class_path / Path(file.name)
-                        bytes_data = file.getvalue()
-                        fopen = open(file_path, "wb")
-                        fopen.write(bytes_data)
-                        fopen.close()
-        except Exception as e:
-            st.error(e)
-        # TODO: Save image files to class subfolders
+        # Create class folders with uploaded data
+        data_uploader(data, model_dir)
+
         st.success(f"Data saved successfully for {model_name} v{model_version} 🎊")
-        st.write(f'To add more data to this model, add data to relevant classes inside {model_dir}')
+        st.write(f'To add more data, push new images to ',model_dir.absolute())
         st.text("To start training, run")
-        st.code("make train {}")
+        st.code(f"make train {model_dir}")
         # print(data)
